@@ -13,7 +13,7 @@ data class Taxonomy(
 )
 
 data class Characteristics(
-    val common_name: String,
+    val common_name: String = "",
     val slogan: String? = null,
     val lifespan: String? = null,
     val wingspan: String? = null,

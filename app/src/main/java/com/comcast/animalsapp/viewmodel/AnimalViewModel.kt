@@ -33,9 +33,9 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
         val pattern = "\\b${Regex.escape(query)}\\b".toRegex(RegexOption.IGNORE_CASE)
 
         list.filter {
-            val name = it.name.orEmpty()
-            val commonName = it.characteristics.common_name.orEmpty()
-            val type = it.type.orEmpty()
+            val name = it.name
+            val commonName = it.characteristics.common_name
+            val type = it.type
 
             // Log the values being checked and the result
             val matches = pattern.containsMatchIn(name) ||
@@ -43,9 +43,7 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
                     pattern.containsMatchIn(type)
 
             Log.d("AnimalFilter", "name='$name', commonName='$commonName', type='$type', pattern='${pattern.pattern}', matches=$matches")
-
-
-            matches
+           matches
         }
 
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
