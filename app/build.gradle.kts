@@ -68,5 +68,11 @@ dependencies {
     testImplementation(libs.junit)
     implementation(libs.logging.interceptor)
 
+    // Unit testing
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit)
+
+
     androidTestImplementation(libs.ui.test.junit4)
 }

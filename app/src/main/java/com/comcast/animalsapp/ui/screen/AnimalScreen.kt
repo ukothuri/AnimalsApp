@@ -19,16 +19,16 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.comcast.animalsapp.viewmodel.AnimalViewModel
 import androidx.compose.runtime.getValue
+
 @Composable
 fun AnimalScreen(viewModel: AnimalViewModel) {
     val orientation = LocalConfiguration.current.orientation
-
-    // Fix: Collect the state from StateFlow into Compose
     val animalList by viewModel.filteredAnimals.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     Column {
         OutlinedTextField(
-            value = viewModel.searchQuery,
+            value = searchQuery,
             onValueChange = viewModel::updateSearch,
             modifier = Modifier
                 .fillMaxWidth()

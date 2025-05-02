@@ -3,7 +3,8 @@ package com.comcast.animalsapp.model
 data class Animal(
     val name: String,
     val taxonomy: Taxonomy,
-    val characteristics: Characteristics
+    val characteristics: Characteristics,
+    val type: String = "" // manually added: "dog", "bird", or "bug"
 )
 
 data class Taxonomy(
@@ -13,10 +14,10 @@ data class Taxonomy(
 
 data class Characteristics(
     val common_name: String,
-    val slogan: String?,
-    val lifespan: String?,
-    val wingspan: String?,
-    val habitat: String?,
-    val prey: String?,
-    val predators: String?
+    val slogan: String? = null,
+    val lifespan: String? = null,
+    val wingspan: String? = null,
+    val habitat: String? = null,
+    val prey: String? = null,
+    val predators: String? = null
 )

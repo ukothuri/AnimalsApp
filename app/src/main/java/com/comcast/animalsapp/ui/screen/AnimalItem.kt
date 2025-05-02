@@ -14,11 +14,20 @@ fun AnimalItem(animal: Animal) {
         Text("Name: ${animal.name}")
         Text("Phylum: ${animal.taxonomy.phylum}")
         Text("Scientific: ${animal.taxonomy.scientific_name}")
-        animal.characteristics.slogan?.let { Text("Slogan: $it") }
-        animal.characteristics.lifespan?.let { Text("Lifespan: $it") }
-        animal.characteristics.wingspan?.let { Text("Wingspan: $it") }
-        animal.characteristics.habitat?.let { Text("Habitat: $it") }
-        animal.characteristics.prey?.let { Text("Prey: $it") }
-        animal.characteristics.predators?.let { Text("Predators: $it") }
+
+        when {
+            animal.name.contains("dog", ignoreCase = true) -> {
+                animal.characteristics.slogan?.let { Text("Slogan: $it") }
+                animal.characteristics.lifespan?.let { Text("Lifespan: $it") }
+            }
+            animal.name.contains("bird", ignoreCase = true) -> {
+                animal.characteristics.wingspan?.let { Text("Wingspan: $it") }
+                animal.characteristics.habitat?.let { Text("Habitat: $it") }
+            }
+            animal.name.contains("bug", ignoreCase = true) -> {
+                animal.characteristics.prey?.let { Text("Prey: $it") }
+                animal.characteristics.predators?.let { Text("Predators: $it") }
+            }
+        }
     }
 }
