@@ -38,7 +38,7 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    // Loads animal data from the repository, assigns a type tag to each group, and stores the combined list
+    // Loads animal data from th repository, assigns a type tag to each group, and stores the combined list
     fun loadAnimals() {
         viewModelScope.launch {
             // Fetch and tag 3 animals per group
