@@ -1,5 +1,6 @@
 package com.comcast.animalsapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comcast.animalsapp.model.Animal
@@ -32,10 +33,21 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
         val pattern = "\\b${Regex.escape(query)}\\b".toRegex(RegexOption.IGNORE_CASE)
 
         list.filter {
-            pattern.containsMatchIn(it.name.orEmpty()) ||                            // Match in name
-                    pattern.containsMatchIn(it.characteristics.common_name.orEmpty()) ||     // Match in common name
-                    pattern.containsMatchIn(it.type.orEmpty())                               // Match in assigned type ("dog", "bird", "bug")
+            val name = it.name.orEmpty()
+            val commonName = it.characteristics.common_name.orEmpty()
+            val type = it.type.orEmpty()
+
+            // Log the values being checked and the result
+            val matches = pattern.containsMatchIn(name) ||
+                    pattern.containsMatchIn(commonName) ||
+                    pattern.containsMatchIn(type)
+
+            Log.d("AnimalFilter", "name='$name', commonName='$commonName', type='$type', pattern='${pattern.pattern}', matches=$matches")
+
+
+            matches
         }
+
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     // Loads animal data from th repository, assigns a type tag to each group, and stores the combined list
