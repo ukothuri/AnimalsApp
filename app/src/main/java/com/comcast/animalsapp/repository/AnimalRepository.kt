@@ -2,8 +2,13 @@ package com.comcast.animalsapp.repository
 
 import com.comcast.animalsapp.model.Animal
 import com.comcast.animalsapp.network.ApiService
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnimalRepository(private val api: ApiService) {
+@Singleton
+class AnimalRepository @Inject constructor(
+    private val api: ApiService
+) {
 
     // In-memory cache: maps search name to a pair of (timestamp, list of animals)
     private val cache = mutableMapOf<String, Pair<Long, List<Animal>>>()

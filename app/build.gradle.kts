@@ -1,7 +1,10 @@
+apply(plugin = "kotlin-kapt")
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -37,10 +40,17 @@ android {
     buildFeatures {
         compose = true
     }
+    hilt {
+        enableAggregatingTask = false
+    }
 }
 
 dependencies {
-
+// Hilt
+    implementation(libs.hilt.android)
+//    implementation(libs.androidx.appcompat)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comcast.animalsapp.model.Animal
 import com.comcast.animalsapp.repository.AnimalRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,8 +13,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
+@HiltViewModel
+class AnimalViewModel @Inject constructor(
+    private val repository: AnimalRepository
+) : ViewModel() {
 
     // Holds the complete list of animals (dog, bird, bug) after fetching from the API
     private val _animals = MutableStateFlow<List<Animal>>(emptyList())
