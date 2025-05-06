@@ -4,7 +4,11 @@ data class Animal(
     val name: String,
     val taxonomy: Taxonomy,
     val characteristics: Characteristics,
-    val type: String = "" // manually added: "dog", "bird", or "bug"
+
+    // App-specific field used to tag the animal category ("dog", "bird", "bug").
+    // Not part of the API response; manually injected for filtering/grouping in UI.
+
+    val type: String = ""
 )
 
 data class Taxonomy(
