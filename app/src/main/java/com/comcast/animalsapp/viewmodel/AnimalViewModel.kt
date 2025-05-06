@@ -73,7 +73,7 @@ class AnimalViewModel @Inject constructor(
             // This ensures the UI can display a unified, clearly-typed list of animals
             _animals.value = dogList + birdList + bugList
         } catch (e: Exception) {
-                Log.e("AnimalViewModel", "Error loading animals", e)
+                println("AnimalViewModel: ${e.message}") // Safe for unit tests
                 _animals.value = emptyList()
             _errorMessage.value = "Failed to load animals. Please check your network or try again later."
         }
