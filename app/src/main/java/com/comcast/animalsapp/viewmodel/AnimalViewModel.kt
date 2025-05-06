@@ -51,12 +51,15 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
     // Loads animal data from th repository, assigns a type tag to each group, and stores the combined list
     fun loadAnimals() {
         viewModelScope.launch {
-            // Fetch and tag 3 animals per group
+            // Fetch the first 3 dog entries from the API, and tag each with type = "dog"
             val dogList = repository.getAnimals("dog").take(3).map { it.copy(type = "dog") }
+            // Fetch the first 3 bird entries and tag each with type = "bird"
             val birdList = repository.getAnimals("bird").take(3).map { it.copy(type = "bird") }
+            // Fetch the first 3 bug entries and tag each with type = "bug"
             val bugList = repository.getAnimals("bug").take(3).map { it.copy(type = "bug") }
 
-            // Combine all into a single list and update the state
+            // Combine the tagged animal lists into a single list and update the state
+            // This ensures the UI can display a unified, clearly-typed list of animals
             _animals.value = dogList + birdList + bugList
         }
     }
