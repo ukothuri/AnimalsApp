@@ -7,6 +7,7 @@ import com.comcast.animalsapp.model.Animal
 import com.comcast.animalsapp.repository.AnimalRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -17,6 +18,9 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
     // Holds the complete list of animals (dog, bird, bug) after fetching from the API
     private val _animals = MutableStateFlow<List<Animal>>(emptyList())
     val animals = _animals.asStateFlow() // public immutable access
+
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage
 
     // Stores the current search input from the user
     private val _searchQuery = MutableStateFlow("")
@@ -51,6 +55,8 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
     // Loads animal data from th repository, assigns a type tag to each group, and stores the combined list
     fun loadAnimals() {
         viewModelScope.launch {
+            try {
+           // delay(5000)
             // Fetch the first 3 dog entries from the API, and tag each with type = "dog"
             val dogList = repository.getAnimals("dog").take(3).map { it.copy(type = "dog") }
             // Fetch the first 3 bird entries and tag each with type = "bird"
@@ -61,6 +67,11 @@ class AnimalViewModel(private val repository: AnimalRepository) : ViewModel() {
             // Combine the tagged animal lists into a single list and update the state
             // This ensures the UI can display a unified, clearly-typed list of animals
             _animals.value = dogList + birdList + bugList
+        } catch (e: Exception) {
+                Log.e("AnimalViewModel", "Error loading animals", e)
+                _animals.value = emptyList()
+            _errorMessage.value = "Failed to load animals. Please check your network or try again later."
+        }
         }
     }
 }
