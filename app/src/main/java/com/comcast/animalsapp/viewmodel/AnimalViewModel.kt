@@ -72,6 +72,7 @@ class AnimalViewModel @Inject constructor(
             // Combine the tagged animal lists into a single list and update the state
             // This ensures the UI can display a unified, clearly-typed list of animals
             _animals.value = dogList + birdList + bugList
+            _errorMessage.value = null
         } catch (e: Exception) {
                 println("AnimalViewModel: ${e.message}") // Safe for unit tests
                 _animals.value = emptyList()
